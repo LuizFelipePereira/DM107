@@ -16,8 +16,8 @@ app.use(
         host     : 'localhost',
         user     : 'root',
         password : '123456',
-         port : 3306, //port mysql
-        database : 'test',
+        port : 3306, //port mysql
+        database : 'DM107',
         debug    : false //set true if you wanna see debug logger
     },'request')
 

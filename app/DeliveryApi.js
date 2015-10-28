@@ -20,26 +20,6 @@ router.get('/', function(req,res) {
                 return next("Mysql error, check your query");
             }
 
-            //res.render('id',{title:"RESTful Crud Example",data:rows});
-	    res.json(rows);
-
-         });req.params.id
-
-    });
-});
-
-router.get('/:id', function (req,res){
-   
-    req.getConnection(function(err,conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query('SELECT * FROM entregas where idEntrega = ?',[req.params.id],function(err,rows){
-
-            if(err){
-                console.log(err);
-                return next("Mysql error, check your query");
-            }
 	    res.json(rows);
 
          });

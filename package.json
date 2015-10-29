@@ -1,21 +1,12 @@
 {
-  "name": "todo-nodejs-app",
-  "version": "1.0.0",
-  "description": "TODO List app",
-  "main": "server.js",
+  "name": "RESTful-API",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node Server.js"
   },
-  "keywords": [
-    "NodeJS",
-    "REST",
-    "API"
-  ],
-  "author": "Luiz Felipe Pereira",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.14.1",
-    "express": "^4.13.3",
-    "mysql": "^2.9.0"",
+    "body-parser": "~1.12.0",
+    "express": "^4.12.4",
+    "mysql": "~2.5.5"
   }
 }

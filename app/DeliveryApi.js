@@ -1,49 +1,55 @@
 // Dependencies
 var express = require('express');
 var router = express.Router();
+var mysql = require('mysql');
 
+var conn = mysql.createConnection('mysql://root:123456@127.0.0.1/DM107');
 
 var notFound = function (res) {
     res.status(404).send('Not Found!');
 }
 
+    var getConnection = conn.connect(function(err){
+        if(!err){
+        console.log('Database connected');
+        }else{
+        console.log('Database is not started.');
+        } 
+	});
+
 router.get('/', function(req,res) {
-   
-    req.getConnection(function(err,conn){
 
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query('SELECT * FROM entregas',function(err,rows){
+		var query = conn.query('SELECT * FROM entregas',function(err,rows){
 
             if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-
-	    res.json(rows);
-
+			
+			if(rows.length == 0){
+                res.status(404).json("Deliverys not found !");
+            }else{
+				res.status(200).json(rows);
+            }
          });
-
-    });
 });
 
 router.get('/:id', function (req,res){
-   
-    req.getConnection(function(err,conn){
 
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query('SELECT * FROM entregas where idEntrega = ?',[req.params.id],function(err,rows){
+		var query = conn.query('SELECT * FROM entregas where idEntrega = ?',[req.params.id],function(err,rows){
 
             if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
             }
-	    res.json(rows);
+			
+			if(rows.length == 0){
+                res.status(404).json("Delivery not found !");
+            }else{
+				res.status(200).json(rows);
+            }
+         });  
 
-         });
-
-    });
 });
 
 router.post('/', function(req,res) {
@@ -60,23 +66,16 @@ router.post('/', function(req,res) {
         localizacao:req.body.localizacao
      };
 
-    //inserting into mysql
-    req.getConnection(function (err, conn){
+		var query = conn.query('INSERT INTO entregas set ? ',data, function(err, rows){
 
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("INSERT INTO entregas set ? ",data, function(err, rows){
-
-           if(err){
+            if(err){
                 console.log(err);
                 return next("Mysql error, check your query");
-           }
-
-          res.sendStatus(200);
-
-        });
-
-     });
+            }
+			
+		    res.sendStatus(200).json(rows);
+         
+         });   
 });
 
 router.put('/:id', function(req,res) {
@@ -93,47 +92,36 @@ router.put('/:id', function(req,res) {
         datahoraEntrega:req.body.datahoraEntrega,
         localizacao:req.body.localizacao
      };
+	 
+	
+	var query = conn.query('UPDATE entregas set ? WHERE idEntrega = ? ',[data,idEntrega], function(err, rows){
 
-    //inserting into mysql
-    req.getConnection(function (err, conn){
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("UPDATE entregas set ? WHERE idEntrega = ? ",[data,idEntrega], function(err, rows){
-
-           if(err){
+        if(err){
                 console.log(err);
-                return next("Mysql error, check your query");
-           }
-
-          res.sendStatus(200);aa
-
-        });
-
-     });
-
+                res.status(404).json('Delivery not UPDATE');
+        }
+			
+	    console.log('Delivery Update Sucess');
+		res.sendStatus(200).json(rows);
+         
+    });
 });
    
 router.delete('/:id', function(req,res){
 
     var idEntrega = req.params.id;
+	
+	var query = conn.query('DELETE FROM entregas  WHERE idEntrega = ? ',[idEntrega], function(err, rows){
 
-     req.getConnection(function (err, conn) {
-
-        if (err) return next("Cannot Connect");
-
-        var query = conn.query("DELETE FROM entregas  WHERE idEntrega = ? ",[idEntrega], function(err, rows){
-
-             if(err){
+        if(err){
                 console.log(err);
-                return next("Mysql error, check your query");
-             }
-
-             res.sendStatus(200);
-
-        });
-     });
+                res.status(404).json('Delivery not Deleted');
+        }
+		
+	    console.log("Delivery deleted sucess");
+        res.status(200).json("Delivery deleted");
+		
+    });
 });
-
 
 module.exports = router;

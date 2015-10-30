@@ -5,7 +5,7 @@
         "title": "Todo List API",
         "description": "This document describes the Todo List API"
     },
-    "host": "localhost:8080",
+    "host": "www.inatelawsdm107.tk",
     "tags": [
         {
             "name": "Delivery",
@@ -104,7 +104,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "type": "string",
+                        "type": "int",
                         "description": "ID of the Delivery",
                         "required": true
                     },
@@ -133,13 +133,13 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "type": "string",
+                        "type": "int",
                         "description": "ID of the Delivery",
                         "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "404": {
                         "description": "No response received"
                     }
                 }
@@ -168,8 +168,7 @@
                     "type": "boolean"
                 },
                 "datahoraEntrega": {
-                    "type": "string",
-                    "format": "date-time"
+                    "type": "string"
                 },
                 "localizacao": {
                     "type": "string"

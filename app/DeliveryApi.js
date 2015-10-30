@@ -5,10 +5,6 @@ var mysql = require('mysql');
 
 var conn = mysql.createConnection('mysql://root:123456@127.0.0.1/DM107');
 
-var notFound = function (res) {
-    res.status(404).send('Not Found!');
-}
-
     var getConnection = conn.connect(function(err){
         if(!err){
         console.log('Database connected');
@@ -73,7 +69,7 @@ router.post('/', function(req,res) {
                 return next("Mysql error, check your query");
             }
 			
-		    res.sendStatus(200).json(rows);
+		    res.status(200).json("Delivery inserted Sucess");
          
          });   
 });
@@ -102,7 +98,7 @@ router.put('/:id', function(req,res) {
         }
 			
 	    console.log('Delivery Update Sucess');
-		res.sendStatus(200).json(rows);
+		res.status(200).json("Delivery updated Sucess");
          
     });
 });
@@ -119,7 +115,7 @@ router.delete('/:id', function(req,res){
         }
 		
 	    console.log("Delivery deleted sucess");
-        res.status(200).json("Delivery deleted");
+        res.status(200).json("Delivery deleted Sucess");
 		
     });
 });

@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
         "version": "0.0.1",
-        "title": "Todo List API",
-        "description": "This document describes the Todo List API"
+        "title": "Delivery API",
+        "description": "This document describes the Delivery List API"
     },
     "host": "www.inatelawsdm107.tk",
     "tags": [
@@ -120,7 +120,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Save a Delivery"
+                        "description": "Delivery updated"
                     }
                 }
             },
@@ -139,8 +139,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "No response received"
+                    "200": {
+                        "description": "Delivery deleted"
                     }
                 }
             }

@@ -4,7 +4,7 @@ var router = express.Router();
 var mysql = require('mysql');
 
 var conn = mysql.createConnection('mysql://root:123456@127.0.0.1/DM107');
-
+//
     var getConnection = conn.connect(function(err){
         if(!err){
         console.log('Database connected');
